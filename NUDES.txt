@@ -46,7 +46,7 @@ Final Temp: 33.812
 8.0 33.062
 9.0 33.187
 10.0 33.312
-Experiment: 
+(outlier)Experiment: 
 Final Temp: 37.562
 1.0 26.25
 2.0 27.5
@@ -70,7 +70,7 @@ Final Temp: 45.5
 8.0 42.75
 9.0 43.187
 10.0 43.562
-Experiment: 
+(outlier)Experiment: 
 Final Temp: 49.75
 1.0 27.5
 2.0 30.187
@@ -94,7 +94,7 @@ Final Temp: 52.812
 8.0 50.0
 9.0 50.562
 10.0 51.0
-Experiment: 
+(outlier)Experiment: 
 Final Temp: 57.937
 1.0 28.75
 2.0 32.437
@@ -214,7 +214,7 @@ Final Temp: 32.562
 8.0 31.937
 9.0 32.0
 10.0 32.062
-Experiment: 
+(outlier)Experiment: 
 Final Temp: 24.062
 1.0 31.437
 2.0 28.75
