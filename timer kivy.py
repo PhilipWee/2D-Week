@@ -56,7 +56,8 @@ def preprocess(data):
         print(dataset[row_no][0])
         y_data.append(dataset[row_no][0])
         x_data_row = []
-        for col_no in range(1,len(dataset[0])):
+        #changed to take first three values only
+        for col_no in range(1,4):
             x_data_row.append(dataset[row_no][col_no])
         x_data.append(x_data_row)
     return x_data,y_data
@@ -104,7 +105,7 @@ Builder.load_string('''
             text: str(round(root.timepassed,1))
             on_press:
                 root.begin_twodee()
-                root.start_time()
+                root.start_stop_time()
                 
         Label: 
             text: 'Prediction Time'
@@ -130,15 +131,23 @@ class MainWidget(GridLayout):
         super(MainWidget, self).__init__(**kwargs)
         Clock.schedule_interval(self.increment_temp, .1)
         self.increment_temp(0)
+        self.started = False
                                                                                 #save the machine learning model
-    def increment_time(self, interval):                             
-        self.timepassed = time.time() - self.st
+    def increment_time(self, interval):
+        print(db.child('r_pi').child("temp_list").get().val() == 'developing')
+        
+        if db.child('r_pi').child("temp_list").get().val() == 'developing':
+            if self.started == False:
+                self.st = time.time() 
+                self.started = True                            
+            self.timepassed = time.time() - self.st
           
     def increment_temp(self, interval):
         self.temp = db.child('r_pi').child("temp").get().val()
         if db.child('r_pi').child("temp_list").get().val() == 'done':
             temps_at_times = []
-            for i in range(0,10):
+            #changed to take first 3 values only
+            for i in range(0,3):
                 current_temp = db.child('temps_at_times').child(str(i)).get().val()
                 temps_at_times.append(current_temp)
             db.child('r_pi').update({"temp_list":"waiting"})
@@ -147,8 +156,8 @@ class MainWidget(GridLayout):
             print(type(float(predicted_final_temp[0])))
             self.pred_temp = float(predicted_final_temp[0])
             
-    def start_time(self):
-        self.st = time.time()
+    def start_stop_time(self):
+        
         Clock.schedule_interval(self.increment_time, .1)
         self.increment_time(0)
         
